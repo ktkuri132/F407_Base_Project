@@ -1,0 +1,1499 @@
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"stm32f4xx_cryp_des.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.CRYP_DES_ECB,"ax",%progbits
+  18              		.align	1
+  19              		.global	CRYP_DES_ECB
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	CRYP_DES_ECB:
+  27              	.LVL0:
+  28              	.LFB123:
+  29              		.file 1 "STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c"
+   1:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /**
+   2:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ******************************************************************************
+   3:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @file    stm32f4xx_cryp_des.c
+   4:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @author  MCD Application Team
+   5:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @version V1.8.1
+   6:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @date    27-January-2022
+   7:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @brief   This file provides high level functions to encrypt and decrypt an 
+   8:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          input message using DES in ECB/CBC modes.
+   9:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          It uses the stm32f4xx_cryp.c/.h drivers to access the STM32F4xx CRYP
+  10:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          peripheral.
+  11:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *
+  12:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** @verbatim
+  13:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   
+  14:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  ===================================================================
+  15:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****                   ##### How to use this driver #####
+  16:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  ===================================================================
+  17:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  [..] 
+  18:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****    (#) Enable The CRYP controller clock using 
+  19:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****        RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_CRYP, ENABLE); function.
+  20:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   
+  21:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****    (#) Encrypt and decrypt using DES in ECB Mode using CRYP_DES_ECB() function.
+  22:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   
+  23:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****    (#) Encrypt and decrypt using DES in CBC Mode using CRYP_DES_CBC() function.
+  24:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   
+  25:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** @endverbatim
+  26:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *
+  27:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ******************************************************************************
+  28:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @attention
+  29:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 2
+
+
+  30:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * Copyright (c) 2016 STMicroelectronics.
+  31:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * All rights reserved.
+  32:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *
+  33:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  34:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * in the root directory of this software component.
+  35:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  36:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *
+  37:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ******************************************************************************
+  38:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+  39:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  40:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Includes ------------------------------------------------------------------*/
+  41:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** #include "stm32f4xx_cryp.h"
+  42:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  43:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  44:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /** @addtogroup STM32F4xx_StdPeriph_Driver
+  45:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @{
+  46:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+  47:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  48:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /** @defgroup CRYP 
+  49:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @brief CRYP driver modules
+  50:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @{
+  51:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+  52:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  53:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private typedef -----------------------------------------------------------*/
+  54:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private define ------------------------------------------------------------*/
+  55:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** #define DESBUSY_TIMEOUT    ((uint32_t) 0x00010000)
+  56:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  57:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private macro -------------------------------------------------------------*/
+  58:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private variables ---------------------------------------------------------*/
+  59:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private function prototypes -----------------------------------------------*/
+  60:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /* Private functions ---------------------------------------------------------*/
+  61:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  62:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  63:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /** @defgroup CRYP_Private_Functions
+  64:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @{
+  65:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */ 
+  66:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  67:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /** @defgroup CRYP_Group8 High Level DES functions
+  68:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  *  @brief   High Level DES functions 
+  69:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  *
+  70:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** @verbatim   
+  71:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  ===============================================================================
+  72:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****                        ##### High Level DES functions #####
+  73:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****  ===============================================================================
+  74:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** @endverbatim
+  75:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @{
+  76:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+  77:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+  78:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /**
+  79:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @brief  Encrypt and decrypt using DES in ECB Mode
+  80:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Mode: encryption or decryption Mode.
+  81:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *           This parameter can be one of the following values:
+  82:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *            @arg MODE_ENCRYPT: Encryption
+  83:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *            @arg MODE_DECRYPT: Decryption
+  84:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Key: Key used for DES algorithm.
+  85:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Ilength: length of the Input buffer, must be a multiple of 8.
+  86:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Input: pointer to the Input buffer.
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 3
+
+
+  87:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Output: pointer to the returned buffer.
+  88:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @retval An ErrorStatus enumeration value:
+  89:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          - SUCCESS: Operation done
+  90:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          - ERROR: Operation failed
+  91:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+  92:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** ErrorStatus CRYP_DES_ECB(uint8_t Mode, uint8_t Key[8], uint8_t *Input, 
+  93:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****                          uint32_t Ilength, uint8_t *Output)
+  94:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** {
+  30              		.loc 1 94 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 4, pretend = 0, frame = 56
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 94 1 is_stmt 0 view .LVU1
+  35 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  36              	.LCFI0:
+  37              		.cfi_def_cfa_offset 24
+  38              		.cfi_offset 4, -24
+  39              		.cfi_offset 5, -20
+  40              		.cfi_offset 6, -16
+  41              		.cfi_offset 7, -12
+  42              		.cfi_offset 8, -8
+  43              		.cfi_offset 14, -4
+  44 0004 8EB0     		sub	sp, sp, #56
+  45              	.LCFI1:
+  46              		.cfi_def_cfa_offset 80
+  47 0006 0646     		mov	r6, r0
+  48 0008 0D46     		mov	r5, r1
+  49 000a 1F46     		mov	r7, r3
+  95:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_InitTypeDef DES_CRYP_InitStructure;
+  50              		.loc 1 95 3 is_stmt 1 view .LVU2
+  96:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyInitTypeDef DES_CRYP_KeyInitStructure;
+  51              		.loc 1 96 3 view .LVU3
+  97:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   __IO uint32_t counter = 0;
+  52              		.loc 1 97 3 view .LVU4
+  53              		.loc 1 97 17 is_stmt 0 view .LVU5
+  54 000c 0023     		movs	r3, #0
+  55              	.LVL1:
+  56              		.loc 1 97 17 view .LVU6
+  57 000e 0193     		str	r3, [sp, #4]
+  98:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t busystatus = 0;
+  58              		.loc 1 98 3 is_stmt 1 view .LVU7
+  59              	.LVL2:
+  99:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ErrorStatus status = SUCCESS;
+  60              		.loc 1 99 3 view .LVU8
+ 100:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t keyaddr    = (uint32_t)Key;
+  61              		.loc 1 100 3 view .LVU9
+ 101:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t inputaddr  = (uint32_t)Input;
+  62              		.loc 1 101 3 view .LVU10
+  63              		.loc 1 101 12 is_stmt 0 view .LVU11
+  64 0010 1446     		mov	r4, r2
+  65              	.LVL3:
+ 102:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t outputaddr = (uint32_t)Output;
+  66              		.loc 1 102 3 is_stmt 1 view .LVU12
+  67              		.loc 1 102 12 is_stmt 0 view .LVU13
+  68 0012 DDF85080 		ldr	r8, [sp, #80]
+  69              	.LVL4:
+ 103:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t i = 0;
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 4
+
+
+  70              		.loc 1 103 3 is_stmt 1 view .LVU14
+ 104:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 105:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Crypto structures initialisation*/
+ 106:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyStructInit(&DES_CRYP_KeyInitStructure);
+  71              		.loc 1 106 3 view .LVU15
+  72 0016 02A8     		add	r0, sp, #8
+  73              	.LVL5:
+  74              		.loc 1 106 3 is_stmt 0 view .LVU16
+  75 0018 FFF7FEFF 		bl	CRYP_KeyStructInit
+  76              	.LVL6:
+ 107:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 108:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Crypto Init for Encryption process */
+ 109:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   if( Mode == MODE_ENCRYPT ) /* DES encryption */
+  77              		.loc 1 109 3 is_stmt 1 view .LVU17
+  78              		.loc 1 109 5 is_stmt 0 view .LVU18
+  79 001c 012E     		cmp	r6, #1
+  80 001e 1DD0     		beq	.L13
+ 110:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 111:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****      DES_CRYP_InitStructure.CRYP_AlgoDir  = CRYP_AlgoDir_Encrypt;
+ 112:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 113:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   else/* if( Mode == MODE_DECRYPT )*/ /* DES decryption */
+ 114:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {      
+ 115:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****      DES_CRYP_InitStructure.CRYP_AlgoDir  = CRYP_AlgoDir_Decrypt;
+  81              		.loc 1 115 6 is_stmt 1 view .LVU19
+  82              		.loc 1 115 43 is_stmt 0 view .LVU20
+  83 0020 0423     		movs	r3, #4
+  84 0022 0A93     		str	r3, [sp, #40]
+  85              	.L3:
+ 116:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 117:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 118:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_InitStructure.CRYP_AlgoMode = CRYP_AlgoMode_DES_ECB;
+  86              		.loc 1 118 3 is_stmt 1 view .LVU21
+  87              		.loc 1 118 40 is_stmt 0 view .LVU22
+  88 0024 1023     		movs	r3, #16
+  89 0026 0B93     		str	r3, [sp, #44]
+ 119:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_InitStructure.CRYP_DataType = CRYP_DataType_8b;
+  90              		.loc 1 119 3 is_stmt 1 view .LVU23
+  91              		.loc 1 119 40 is_stmt 0 view .LVU24
+  92 0028 8023     		movs	r3, #128
+  93 002a 0C93     		str	r3, [sp, #48]
+ 120:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_Init(&DES_CRYP_InitStructure);
+  94              		.loc 1 120 3 is_stmt 1 view .LVU25
+  95 002c 0AA8     		add	r0, sp, #40
+  96 002e FFF7FEFF 		bl	CRYP_Init
+  97              	.LVL7:
+ 121:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 122:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Key Initialisation */
+ 123:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_KeyInitStructure.CRYP_Key1Left = __REV(*(uint32_t*)(keyaddr));
+  98              		.loc 1 123 3 view .LVU26
+  99              		.loc 1 123 45 is_stmt 0 view .LVU27
+ 100 0032 2B68     		ldr	r3, [r5]
+ 101              	.LVL8:
+ 102              	.LBB14:
+ 103              	.LBI14:
+ 104              		.file 2 "STM32F4xx_LIB/core/core_cmInstr.h"
+   1:STM32F4xx_LIB/core/core_cmInstr.h **** /**************************************************************************//**
+   2:STM32F4xx_LIB/core/core_cmInstr.h ****  * @file     core_cmInstr.h
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 5
+
+
+   3:STM32F4xx_LIB/core/core_cmInstr.h ****  * @brief    CMSIS Cortex-M Core Instruction Access Header File
+   4:STM32F4xx_LIB/core/core_cmInstr.h ****  * @version  V4.10
+   5:STM32F4xx_LIB/core/core_cmInstr.h ****  * @date     18. March 2015
+   6:STM32F4xx_LIB/core/core_cmInstr.h ****  *
+   7:STM32F4xx_LIB/core/core_cmInstr.h ****  * @note
+   8:STM32F4xx_LIB/core/core_cmInstr.h ****  *
+   9:STM32F4xx_LIB/core/core_cmInstr.h ****  ******************************************************************************/
+  10:STM32F4xx_LIB/core/core_cmInstr.h **** /* Copyright (c) 2009 - 2014 ARM LIMITED
+  11:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  12:STM32F4xx_LIB/core/core_cmInstr.h ****    All rights reserved.
+  13:STM32F4xx_LIB/core/core_cmInstr.h ****    Redistribution and use in source and binary forms, with or without
+  14:STM32F4xx_LIB/core/core_cmInstr.h ****    modification, are permitted provided that the following conditions are met:
+  15:STM32F4xx_LIB/core/core_cmInstr.h ****    - Redistributions of source code must retain the above copyright
+  16:STM32F4xx_LIB/core/core_cmInstr.h ****      notice, this list of conditions and the following disclaimer.
+  17:STM32F4xx_LIB/core/core_cmInstr.h ****    - Redistributions in binary form must reproduce the above copyright
+  18:STM32F4xx_LIB/core/core_cmInstr.h ****      notice, this list of conditions and the following disclaimer in the
+  19:STM32F4xx_LIB/core/core_cmInstr.h ****      documentation and/or other materials provided with the distribution.
+  20:STM32F4xx_LIB/core/core_cmInstr.h ****    - Neither the name of ARM nor the names of its contributors may be used
+  21:STM32F4xx_LIB/core/core_cmInstr.h ****      to endorse or promote products derived from this software without
+  22:STM32F4xx_LIB/core/core_cmInstr.h ****      specific prior written permission.
+  23:STM32F4xx_LIB/core/core_cmInstr.h ****    *
+  24:STM32F4xx_LIB/core/core_cmInstr.h ****    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:STM32F4xx_LIB/core/core_cmInstr.h ****    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:STM32F4xx_LIB/core/core_cmInstr.h ****    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  27:STM32F4xx_LIB/core/core_cmInstr.h ****    ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  28:STM32F4xx_LIB/core/core_cmInstr.h ****    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  29:STM32F4xx_LIB/core/core_cmInstr.h ****    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+  30:STM32F4xx_LIB/core/core_cmInstr.h ****    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  31:STM32F4xx_LIB/core/core_cmInstr.h ****    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+  32:STM32F4xx_LIB/core/core_cmInstr.h ****    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+  33:STM32F4xx_LIB/core/core_cmInstr.h ****    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  34:STM32F4xx_LIB/core/core_cmInstr.h ****    POSSIBILITY OF SUCH DAMAGE.
+  35:STM32F4xx_LIB/core/core_cmInstr.h ****    ---------------------------------------------------------------------------*/
+  36:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  37:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  38:STM32F4xx_LIB/core/core_cmInstr.h **** #ifndef __CORE_CMINSTR_H
+  39:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CORE_CMINSTR_H
+  40:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  41:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  42:STM32F4xx_LIB/core/core_cmInstr.h **** /* ##########################  Core Instruction Access  ######################### */
+  43:STM32F4xx_LIB/core/core_cmInstr.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+  44:STM32F4xx_LIB/core/core_cmInstr.h ****   Access to dedicated instructions
+  45:STM32F4xx_LIB/core/core_cmInstr.h ****   @{
+  46:STM32F4xx_LIB/core/core_cmInstr.h **** */
+  47:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  48:STM32F4xx_LIB/core/core_cmInstr.h **** #if   defined ( __CC_ARM ) /*------------------RealView Compiler -----------------*/
+  49:STM32F4xx_LIB/core/core_cmInstr.h **** /* ARM armcc specific functions */
+  50:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  51:STM32F4xx_LIB/core/core_cmInstr.h **** #if (__ARMCC_VERSION < 400677)
+  52:STM32F4xx_LIB/core/core_cmInstr.h ****   #error "Please use ARM Compiler Toolchain V4.0.677 or later!"
+  53:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+  54:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  55:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  56:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  No Operation
+  57:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  58:STM32F4xx_LIB/core/core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+  59:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 6
+
+
+  60:STM32F4xx_LIB/core/core_cmInstr.h **** #define __NOP                             __nop
+  61:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  62:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  63:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Wait For Interrupt
+  64:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  65:STM32F4xx_LIB/core/core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+  66:STM32F4xx_LIB/core/core_cmInstr.h ****     until one of a number of events occurs.
+  67:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+  68:STM32F4xx_LIB/core/core_cmInstr.h **** #define __WFI                             __wfi
+  69:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  70:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  71:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Wait For Event
+  72:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  73:STM32F4xx_LIB/core/core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+  74:STM32F4xx_LIB/core/core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+  75:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+  76:STM32F4xx_LIB/core/core_cmInstr.h **** #define __WFE                             __wfe
+  77:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  78:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  79:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Send Event
+  80:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  81:STM32F4xx_LIB/core/core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+  82:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+  83:STM32F4xx_LIB/core/core_cmInstr.h **** #define __SEV                             __sev
+  84:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  85:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  86:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+  87:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  88:STM32F4xx_LIB/core/core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+  89:STM32F4xx_LIB/core/core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+  90:STM32F4xx_LIB/core/core_cmInstr.h ****     memory, after the instruction has been completed.
+  91:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+  92:STM32F4xx_LIB/core/core_cmInstr.h **** #define __ISB() do {\
+  93:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+  94:STM32F4xx_LIB/core/core_cmInstr.h ****                    __isb(0xF);\
+  95:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+  96:STM32F4xx_LIB/core/core_cmInstr.h ****                 } while (0)
+  97:STM32F4xx_LIB/core/core_cmInstr.h **** 
+  98:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+  99:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 100:STM32F4xx_LIB/core/core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+ 101:STM32F4xx_LIB/core/core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+ 102:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 103:STM32F4xx_LIB/core/core_cmInstr.h **** #define __DSB() do {\
+ 104:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+ 105:STM32F4xx_LIB/core/core_cmInstr.h ****                    __dsb(0xF);\
+ 106:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+ 107:STM32F4xx_LIB/core/core_cmInstr.h ****                 } while (0)
+ 108:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 109:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 110:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 111:STM32F4xx_LIB/core/core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 112:STM32F4xx_LIB/core/core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 113:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 114:STM32F4xx_LIB/core/core_cmInstr.h **** #define __DMB() do {\
+ 115:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+ 116:STM32F4xx_LIB/core/core_cmInstr.h ****                    __dmb(0xF);\
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 7
+
+
+ 117:STM32F4xx_LIB/core/core_cmInstr.h ****                    __schedule_barrier();\
+ 118:STM32F4xx_LIB/core/core_cmInstr.h ****                 } while (0)
+ 119:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 120:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 121:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 122:STM32F4xx_LIB/core/core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 123:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 124:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 125:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Reversed value
+ 126:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 127:STM32F4xx_LIB/core/core_cmInstr.h **** #define __REV                             __rev
+ 128:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 129:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 130:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Reverse byte order (16 bit)
+ 131:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 132:STM32F4xx_LIB/core/core_cmInstr.h ****     This function reverses the byte order in two unsigned short values.
+ 133:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 134:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 135:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Reversed value
+ 136:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 137:STM32F4xx_LIB/core/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 138:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(uint32_t value)
+ 139:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 140:STM32F4xx_LIB/core/core_cmInstr.h ****   rev16 r0, r0
+ 141:STM32F4xx_LIB/core/core_cmInstr.h ****   bx lr
+ 142:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 143:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+ 144:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 145:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Reverse byte order in signed short value
+ 146:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 147:STM32F4xx_LIB/core/core_cmInstr.h ****     This function reverses the byte order in a signed short value with sign extension to integer.
+ 148:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 149:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 150:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Reversed value
+ 151:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 152:STM32F4xx_LIB/core/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 153:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int32_t __REVSH(int32_t value)
+ 154:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 155:STM32F4xx_LIB/core/core_cmInstr.h ****   revsh r0, r0
+ 156:STM32F4xx_LIB/core/core_cmInstr.h ****   bx lr
+ 157:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 158:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+ 159:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 160:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 161:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Rotate Right in unsigned value (32 bit)
+ 162:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 163:STM32F4xx_LIB/core/core_cmInstr.h ****     This function Rotate Right (immediate) provides the value of the contents of a register rotated
+ 164:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 165:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 166:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Number of Bits to rotate
+ 167:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Rotated value
+ 168:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 169:STM32F4xx_LIB/core/core_cmInstr.h **** #define __ROR                             __ror
+ 170:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 171:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 172:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Breakpoint
+ 173:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 8
+
+
+ 174:STM32F4xx_LIB/core/core_cmInstr.h ****     This function causes the processor to enter Debug state.
+ 175:STM32F4xx_LIB/core/core_cmInstr.h ****     Debug tools can use this to investigate system state when the instruction at a particular addre
+ 176:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 177:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  is ignored by the processor.
+ 178:STM32F4xx_LIB/core/core_cmInstr.h ****                    If required, a debugger can use it to store additional information about the bre
+ 179:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 180:STM32F4xx_LIB/core/core_cmInstr.h **** #define __BKPT(value)                       __breakpoint(value)
+ 181:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 182:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 183:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Reverse bit order of value
+ 184:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 185:STM32F4xx_LIB/core/core_cmInstr.h ****     This function reverses the bit order of the given value.
+ 186:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 187:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 188:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Reversed value
+ 189:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 190:STM32F4xx_LIB/core/core_cmInstr.h **** #if       (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300)
+ 191:STM32F4xx_LIB/core/core_cmInstr.h ****   #define __RBIT                          __rbit
+ 192:STM32F4xx_LIB/core/core_cmInstr.h **** #else
+ 193:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+ 194:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 195:STM32F4xx_LIB/core/core_cmInstr.h ****   uint32_t result;
+ 196:STM32F4xx_LIB/core/core_cmInstr.h ****   int32_t s = 4 /*sizeof(v)*/ * 8 - 1; // extra shift needed at end
+ 197:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 198:STM32F4xx_LIB/core/core_cmInstr.h ****   result = value;                      // r will be reversed bits of v; first get LSB of v
+ 199:STM32F4xx_LIB/core/core_cmInstr.h ****   for (value >>= 1; value; value >>= 1)
+ 200:STM32F4xx_LIB/core/core_cmInstr.h ****   {
+ 201:STM32F4xx_LIB/core/core_cmInstr.h ****     result <<= 1;
+ 202:STM32F4xx_LIB/core/core_cmInstr.h ****     result |= value & 1;
+ 203:STM32F4xx_LIB/core/core_cmInstr.h ****     s--;
+ 204:STM32F4xx_LIB/core/core_cmInstr.h ****   }
+ 205:STM32F4xx_LIB/core/core_cmInstr.h ****   result <<= s;                       // shift when v's highest bits are zero
+ 206:STM32F4xx_LIB/core/core_cmInstr.h ****   return(result);
+ 207:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 208:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+ 209:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 210:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 211:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Count leading zeros
+ 212:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 213:STM32F4xx_LIB/core/core_cmInstr.h ****     This function counts the number of leading zeros of a data value.
+ 214:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 215:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to count the leading zeros
+ 216:STM32F4xx_LIB/core/core_cmInstr.h ****     \return             number of leading zeros in value
+ 217:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 218:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CLZ                             __clz
+ 219:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 220:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 221:STM32F4xx_LIB/core/core_cmInstr.h **** #if       (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300)
+ 222:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 223:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDR Exclusive (8 bit)
+ 224:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 225:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 8 bit value.
+ 226:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 227:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 228:STM32F4xx_LIB/core/core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 229:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 230:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDREXB(ptr)                     ((uint8_t ) __ldrex(ptr))
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 9
+
+
+ 231:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 232:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 233:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDR Exclusive (16 bit)
+ 234:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 235:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 16 bit values.
+ 236:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 237:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 238:STM32F4xx_LIB/core/core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 239:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 240:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDREXH(ptr)                     ((uint16_t) __ldrex(ptr))
+ 241:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 242:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 243:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDR Exclusive (32 bit)
+ 244:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 245:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive LDR instruction for 32 bit values.
+ 246:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 247:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 248:STM32F4xx_LIB/core/core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 249:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 250:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDREXW(ptr)                     ((uint32_t ) __ldrex(ptr))
+ 251:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 252:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 253:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STR Exclusive (8 bit)
+ 254:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 255:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive STR instruction for 8 bit values.
+ 256:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 257:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 258:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 259:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          0  Function succeeded
+ 260:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          1  Function failed
+ 261:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 262:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STREXB(value, ptr)              __strex(value, ptr)
+ 263:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 264:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 265:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STR Exclusive (16 bit)
+ 266:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 267:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive STR instruction for 16 bit values.
+ 268:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 269:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 270:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 271:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          0  Function succeeded
+ 272:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          1  Function failed
+ 273:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 274:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STREXH(value, ptr)              __strex(value, ptr)
+ 275:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 276:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 277:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STR Exclusive (32 bit)
+ 278:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 279:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a exclusive STR instruction for 32 bit values.
+ 280:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 281:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 282:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 283:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          0  Function succeeded
+ 284:STM32F4xx_LIB/core/core_cmInstr.h ****     \return          1  Function failed
+ 285:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 286:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STREXW(value, ptr)              __strex(value, ptr)
+ 287:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 10
+
+
+ 288:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 289:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Remove the exclusive lock
+ 290:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 291:STM32F4xx_LIB/core/core_cmInstr.h ****     This function removes the exclusive lock which is created by LDREX.
+ 292:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 293:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 294:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CLREX                           __clrex
+ 295:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 296:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 297:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Signed Saturate
+ 298:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 299:STM32F4xx_LIB/core/core_cmInstr.h ****     This function saturates a signed value.
+ 300:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 301:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 302:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (1..32)
+ 303:STM32F4xx_LIB/core/core_cmInstr.h ****     \return             Saturated value
+ 304:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 305:STM32F4xx_LIB/core/core_cmInstr.h **** #define __SSAT                            __ssat
+ 306:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 307:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 308:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Unsigned Saturate
+ 309:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 310:STM32F4xx_LIB/core/core_cmInstr.h ****     This function saturates an unsigned value.
+ 311:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 312:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to be saturated
+ 313:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    sat  Bit position to saturate to (0..31)
+ 314:STM32F4xx_LIB/core/core_cmInstr.h ****     \return             Saturated value
+ 315:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 316:STM32F4xx_LIB/core/core_cmInstr.h **** #define __USAT                            __usat
+ 317:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 318:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 319:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Rotate Right with Extend (32 bit)
+ 320:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 321:STM32F4xx_LIB/core/core_cmInstr.h ****     This function moves each bit of a bitstring right by one bit.
+ 322:STM32F4xx_LIB/core/core_cmInstr.h ****     The carry input is shifted in at the left end of the bitstring.
+ 323:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 324:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to rotate
+ 325:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Rotated value
+ 326:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 327:STM32F4xx_LIB/core/core_cmInstr.h **** #ifndef __NO_EMBEDDED_ASM
+ 328:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint32_t value)
+ 329:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 330:STM32F4xx_LIB/core/core_cmInstr.h ****   rrx r0, r0
+ 331:STM32F4xx_LIB/core/core_cmInstr.h ****   bx lr
+ 332:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 333:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+ 334:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 335:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 336:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDRT Unprivileged (8 bit)
+ 337:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 338:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 8 bit value.
+ 339:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 340:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 341:STM32F4xx_LIB/core/core_cmInstr.h ****     \return             value of type uint8_t at (*ptr)
+ 342:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 343:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDRBT(ptr)                      ((uint8_t )  __ldrt(ptr))
+ 344:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 11
+
+
+ 345:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 346:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDRT Unprivileged (16 bit)
+ 347:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 348:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 16 bit values.
+ 349:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 350:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 351:STM32F4xx_LIB/core/core_cmInstr.h ****     \return        value of type uint16_t at (*ptr)
+ 352:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 353:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDRHT(ptr)                      ((uint16_t)  __ldrt(ptr))
+ 354:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 355:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 356:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  LDRT Unprivileged (32 bit)
+ 357:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 358:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged LDRT instruction for 32 bit values.
+ 359:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 360:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to data
+ 361:STM32F4xx_LIB/core/core_cmInstr.h ****     \return        value of type uint32_t at (*ptr)
+ 362:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 363:STM32F4xx_LIB/core/core_cmInstr.h **** #define __LDRT(ptr)                       ((uint32_t ) __ldrt(ptr))
+ 364:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 365:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 366:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STRT Unprivileged (8 bit)
+ 367:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 368:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 8 bit values.
+ 369:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 370:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 371:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 372:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 373:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STRBT(value, ptr)               __strt(value, ptr)
+ 374:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 375:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 376:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STRT Unprivileged (16 bit)
+ 377:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 378:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 16 bit values.
+ 379:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 380:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 381:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 382:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 383:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STRHT(value, ptr)               __strt(value, ptr)
+ 384:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 385:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 386:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  STRT Unprivileged (32 bit)
+ 387:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 388:STM32F4xx_LIB/core/core_cmInstr.h ****     This function executes a Unprivileged STRT instruction for 32 bit values.
+ 389:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 390:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]  value  Value to store
+ 391:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    ptr  Pointer to location
+ 392:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 393:STM32F4xx_LIB/core/core_cmInstr.h **** #define __STRT(value, ptr)                __strt(value, ptr)
+ 394:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 395:STM32F4xx_LIB/core/core_cmInstr.h **** #endif /* (__CORTEX_M >= 0x03) || (__CORTEX_SC >= 300) */
+ 396:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 397:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 398:STM32F4xx_LIB/core/core_cmInstr.h **** #elif defined ( __GNUC__ ) /*------------------ GNU Compiler ---------------------*/
+ 399:STM32F4xx_LIB/core/core_cmInstr.h **** /* GNU gcc specific functions */
+ 400:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 401:STM32F4xx_LIB/core/core_cmInstr.h **** /* Define macros for porting to both thumb1 and thumb2.
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 12
+
+
+ 402:STM32F4xx_LIB/core/core_cmInstr.h ****  * For thumb1, use low register (r0-r7), specified by constrant "l"
+ 403:STM32F4xx_LIB/core/core_cmInstr.h ****  * Otherwise, use general registers, specified by constrant "r" */
+ 404:STM32F4xx_LIB/core/core_cmInstr.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 405:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 406:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 407:STM32F4xx_LIB/core/core_cmInstr.h **** #else
+ 408:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 409:STM32F4xx_LIB/core/core_cmInstr.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 410:STM32F4xx_LIB/core/core_cmInstr.h **** #endif
+ 411:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 412:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  No Operation
+ 413:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 414:STM32F4xx_LIB/core/core_cmInstr.h ****     No Operation does nothing. This instruction can be used for code alignment purposes.
+ 415:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 416:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __NOP(void)
+ 417:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 418:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("nop");
+ 419:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 420:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 421:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 422:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Wait For Interrupt
+ 423:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 424:STM32F4xx_LIB/core/core_cmInstr.h ****     Wait For Interrupt is a hint instruction that suspends execution
+ 425:STM32F4xx_LIB/core/core_cmInstr.h ****     until one of a number of events occurs.
+ 426:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 427:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __WFI(void)
+ 428:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 429:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("wfi");
+ 430:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 431:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 432:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 433:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Wait For Event
+ 434:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 435:STM32F4xx_LIB/core/core_cmInstr.h ****     Wait For Event is a hint instruction that permits the processor to enter
+ 436:STM32F4xx_LIB/core/core_cmInstr.h ****     a low-power state until one of a number of events occurs.
+ 437:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 438:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __WFE(void)
+ 439:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 440:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("wfe");
+ 441:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 442:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 443:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 444:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Send Event
+ 445:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 446:STM32F4xx_LIB/core/core_cmInstr.h ****     Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 447:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 448:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __SEV(void)
+ 449:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 450:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("sev");
+ 451:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 452:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 453:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 454:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Instruction Synchronization Barrier
+ 455:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 456:STM32F4xx_LIB/core/core_cmInstr.h ****     Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 457:STM32F4xx_LIB/core/core_cmInstr.h ****     so that all instructions following the ISB are fetched from cache or
+ 458:STM32F4xx_LIB/core/core_cmInstr.h ****     memory, after the instruction has been completed.
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 13
+
+
+ 459:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 460:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __ISB(void)
+ 461:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 462:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 463:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 464:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 465:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 466:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Data Synchronization Barrier
+ 467:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 468:STM32F4xx_LIB/core/core_cmInstr.h ****     This function acts as a special kind of Data Memory Barrier.
+ 469:STM32F4xx_LIB/core/core_cmInstr.h ****     It completes when all explicit memory accesses before this instruction complete.
+ 470:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 471:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __DSB(void)
+ 472:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 473:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("dsb 0xF":::"memory");
+ 474:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 475:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 476:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 477:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Data Memory Barrier
+ 478:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 479:STM32F4xx_LIB/core/core_cmInstr.h ****     This function ensures the apparent order of the explicit memory operations before
+ 480:STM32F4xx_LIB/core/core_cmInstr.h ****     and after the instruction, without ensuring their completion.
+ 481:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 482:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE void __DMB(void)
+ 483:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 484:STM32F4xx_LIB/core/core_cmInstr.h ****   __ASM volatile ("dmb 0xF":::"memory");
+ 485:STM32F4xx_LIB/core/core_cmInstr.h **** }
+ 486:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 487:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 488:STM32F4xx_LIB/core/core_cmInstr.h **** /** \brief  Reverse byte order (32 bit)
+ 489:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 490:STM32F4xx_LIB/core/core_cmInstr.h ****     This function reverses the byte order in integer value.
+ 491:STM32F4xx_LIB/core/core_cmInstr.h **** 
+ 492:STM32F4xx_LIB/core/core_cmInstr.h ****     \param [in]    value  Value to reverse
+ 493:STM32F4xx_LIB/core/core_cmInstr.h ****     \return               Reversed value
+ 494:STM32F4xx_LIB/core/core_cmInstr.h ****  */
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** __attribute__((always_inline)) __STATIC_INLINE uint32_t __REV(uint32_t value)
+ 105              		.loc 2 495 57 is_stmt 1 view .LVU28
+ 106              	.LBB15:
+ 496:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 497:STM32F4xx_LIB/core/core_cmInstr.h **** #if (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
+ 498:STM32F4xx_LIB/core/core_cmInstr.h ****   return __builtin_bswap32(value);
+ 107              		.loc 2 498 3 view .LVU29
+ 108              		.loc 2 498 10 is_stmt 0 view .LVU30
+ 109 0034 1BBA     		rev	r3, r3
+ 110              	.LVL9:
+ 111              		.loc 2 498 10 view .LVU31
+ 112              	.LBE15:
+ 113              	.LBE14:
+ 114              		.loc 1 123 43 view .LVU32
+ 115 0036 0493     		str	r3, [sp, #16]
+ 124:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   keyaddr+=4;
+ 116              		.loc 1 124 3 is_stmt 1 view .LVU33
+ 117              	.LVL10:
+ 125:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_KeyInitStructure.CRYP_Key1Right= __REV(*(uint32_t*)(keyaddr));
+ 118              		.loc 1 125 3 view .LVU34
+ 119              		.loc 1 125 45 is_stmt 0 view .LVU35
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 14
+
+
+ 120 0038 6B68     		ldr	r3, [r5, #4]
+ 121              	.LVL11:
+ 122              	.LBB16:
+ 123              	.LBI16:
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 124              		.loc 2 495 57 is_stmt 1 view .LVU36
+ 125              	.LBB17:
+ 126              		.loc 2 498 3 view .LVU37
+ 127              		.loc 2 498 10 is_stmt 0 view .LVU38
+ 128 003a 1BBA     		rev	r3, r3
+ 129              	.LVL12:
+ 130              		.loc 2 498 10 view .LVU39
+ 131              	.LBE17:
+ 132              	.LBE16:
+ 133              		.loc 1 125 43 view .LVU40
+ 134 003c 0593     		str	r3, [sp, #20]
+ 126:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyInit(& DES_CRYP_KeyInitStructure);
+ 135              		.loc 1 126 3 is_stmt 1 view .LVU41
+ 136 003e 02A8     		add	r0, sp, #8
+ 137 0040 FFF7FEFF 		bl	CRYP_KeyInit
+ 138              	.LVL13:
+ 127:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 128:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Flush IN/OUT FIFO */
+ 129:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_FIFOFlush();
+ 139              		.loc 1 129 3 view .LVU42
+ 140 0044 FFF7FEFF 		bl	CRYP_FIFOFlush
+ 141              	.LVL14:
+ 130:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 131:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Enable Crypto processor */
+ 132:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_Cmd(ENABLE);
+ 142              		.loc 1 132 3 view .LVU43
+ 143 0048 0120     		movs	r0, #1
+ 144 004a FFF7FEFF 		bl	CRYP_Cmd
+ 145              	.LVL15:
+ 133:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 134:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   if(CRYP_GetCmdStatus() == DISABLE)
+ 146              		.loc 1 134 3 view .LVU44
+ 147              		.loc 1 134 6 is_stmt 0 view .LVU45
+ 148 004e FFF7FEFF 		bl	CRYP_GetCmdStatus
+ 149              	.LVL16:
+ 150              		.loc 1 134 5 view .LVU46
+ 151 0052 0646     		mov	r6, r0
+ 152 0054 80B3     		cbz	r0, .L4
+ 135:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 136:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     /* The CRYP peripheral clock is not enabled or the device doesn't embed 
+ 137:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     the CRYP peripheral (please check the device sales type. */
+ 138:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     status = ERROR;
+ 139:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 140:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   else
+ 141:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     for(i=0; ((i<Ilength) && (status != ERROR)); i+=8)
+ 153              		.loc 1 142 10 view .LVU47
+ 154 0056 0025     		movs	r5, #0
+ 155              	.LVL17:
+  99:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t keyaddr    = (uint32_t)Key;
+ 156              		.loc 1 99 15 view .LVU48
+ 157 0058 0126     		movs	r6, #1
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 15
+
+
+ 158 005a 05E0     		b	.L5
+ 159              	.LVL18:
+ 160              	.L13:
+ 111:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 161              		.loc 1 111 6 is_stmt 1 view .LVU49
+ 111:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 162              		.loc 1 111 43 is_stmt 0 view .LVU50
+ 163 005c 0023     		movs	r3, #0
+ 164 005e 0A93     		str	r3, [sp, #40]
+ 165 0060 E0E7     		b	.L3
+ 166              	.LVL19:
+ 167              	.L6:
+ 143:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 144:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 145:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       /* Write the Input block in the Input FIFO */
+ 146:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 147:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 148:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 149:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 150:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 151:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       /* Wait until the complete message has been processed */
+ 152:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       counter = 0;
+ 153:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 154:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 155:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         busystatus = CRYP_GetFlagStatus(CRYP_FLAG_BUSY);
+ 156:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 157:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 158:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 159:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       if (busystatus != RESET)
+ 168              		.loc 1 159 7 is_stmt 1 view .LVU51
+ 169              		.loc 1 159 10 is_stmt 0 view .LVU52
+ 170 0062 DAB1     		cbz	r2, .L14
+ 160:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 161:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         status = ERROR;
+ 171              		.loc 1 161 16 view .LVU53
+ 172 0064 0026     		movs	r6, #0
+ 173              	.LVL20:
+ 174              	.L8:
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 175              		.loc 1 142 50 is_stmt 1 discriminator 2 view .LVU54
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 176              		.loc 1 142 51 is_stmt 0 discriminator 2 view .LVU55
+ 177 0066 0835     		adds	r5, r5, #8
+ 178              	.LVL21:
+ 179              	.L5:
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 180              		.loc 1 142 14 is_stmt 1 discriminator 1 view .LVU56
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 181              		.loc 1 142 5 is_stmt 0 discriminator 1 view .LVU57
+ 182 0068 BD42     		cmp	r5, r7
+ 183 006a 22D2     		bcs	.L9
+ 142:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 184              		.loc 1 142 27 discriminator 3 view .LVU58
+ 185 006c 0EB3     		cbz	r6, .L9
+ 146:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 186              		.loc 1 146 7 is_stmt 1 view .LVU59
+ 187 006e 2068     		ldr	r0, [r4]
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 16
+
+
+ 188 0070 FFF7FEFF 		bl	CRYP_DataIn
+ 189              	.LVL22:
+ 147:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 190              		.loc 1 147 7 view .LVU60
+ 148:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 191              		.loc 1 148 7 view .LVU61
+ 192 0074 6068     		ldr	r0, [r4, #4]
+ 193 0076 FFF7FEFF 		bl	CRYP_DataIn
+ 194              	.LVL23:
+ 149:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 195              		.loc 1 149 7 view .LVU62
+ 149:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 196              		.loc 1 149 16 is_stmt 0 view .LVU63
+ 197 007a 0834     		adds	r4, r4, #8
+ 198              	.LVL24:
+ 152:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 199              		.loc 1 152 7 is_stmt 1 view .LVU64
+ 152:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 200              		.loc 1 152 15 is_stmt 0 view .LVU65
+ 201 007c 0023     		movs	r3, #0
+ 202 007e 0193     		str	r3, [sp, #4]
+ 203              	.L7:
+ 153:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 204              		.loc 1 153 7 is_stmt 1 discriminator 2 view .LVU66
+ 155:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 205              		.loc 1 155 9 discriminator 2 view .LVU67
+ 155:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 206              		.loc 1 155 22 is_stmt 0 discriminator 2 view .LVU68
+ 207 0080 1020     		movs	r0, #16
+ 208 0082 FFF7FEFF 		bl	CRYP_GetFlagStatus
+ 209              	.LVL25:
+ 155:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 210              		.loc 1 155 20 discriminator 2 view .LVU69
+ 211 0086 0246     		mov	r2, r0
+ 212              	.LVL26:
+ 156:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 213              		.loc 1 156 9 is_stmt 1 discriminator 2 view .LVU70
+ 156:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 214              		.loc 1 156 16 is_stmt 0 discriminator 2 view .LVU71
+ 215 0088 0199     		ldr	r1, [sp, #4]
+ 216 008a 0131     		adds	r1, r1, #1
+ 217 008c 0191     		str	r1, [sp, #4]
+ 157:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 218              		.loc 1 157 14 is_stmt 1 discriminator 2 view .LVU72
+ 157:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 219              		.loc 1 157 24 is_stmt 0 discriminator 2 view .LVU73
+ 220 008e 019B     		ldr	r3, [sp, #4]
+ 157:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 221              		.loc 1 157 7 discriminator 2 view .LVU74
+ 222 0090 B3F5803F 		cmp	r3, #65536
+ 223 0094 E5D0     		beq	.L6
+ 157:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 224              		.loc 1 157 44 discriminator 1 view .LVU75
+ 225 0096 0028     		cmp	r0, #0
+ 226 0098 F2D1     		bne	.L7
+ 227 009a E2E7     		b	.L6
+ 228              	.L14:
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 17
+
+
+ 162:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }
+ 163:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       else
+ 164:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 165:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         
+ 166:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         /* Read the Output block from the Output FIFO */
+ 167:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         *(uint32_t*)(outputaddr) = CRYP_DataOut();
+ 229              		.loc 1 167 9 is_stmt 1 view .LVU76
+ 230              		.loc 1 167 36 is_stmt 0 view .LVU77
+ 231 009c FFF7FEFF 		bl	CRYP_DataOut
+ 232              	.LVL27:
+ 233              		.loc 1 167 34 view .LVU78
+ 234 00a0 C8F80000 		str	r0, [r8]
+ 168:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         outputaddr+=4;
+ 235              		.loc 1 168 9 is_stmt 1 view .LVU79
+ 236              	.LVL28:
+ 169:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         *(uint32_t*)(outputaddr) = CRYP_DataOut();
+ 237              		.loc 1 169 9 view .LVU80
+ 238              		.loc 1 169 36 is_stmt 0 view .LVU81
+ 239 00a4 FFF7FEFF 		bl	CRYP_DataOut
+ 240              	.LVL29:
+ 241              		.loc 1 169 34 view .LVU82
+ 242 00a8 C8F80400 		str	r0, [r8, #4]
+ 170:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         outputaddr+=4;
+ 243              		.loc 1 170 9 is_stmt 1 view .LVU83
+ 244              		.loc 1 170 19 is_stmt 0 view .LVU84
+ 245 00ac 08F10808 		add	r8, r8, #8
+ 246              	.LVL30:
+ 247              		.loc 1 170 19 view .LVU85
+ 248 00b0 D9E7     		b	.L8
+ 249              	.L9:
+ 171:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }
+ 172:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     }
+ 173:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     
+ 174:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     /* Disable Crypto */
+ 175:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     CRYP_Cmd(DISABLE);
+ 250              		.loc 1 175 5 is_stmt 1 view .LVU86
+ 251 00b2 0020     		movs	r0, #0
+ 252 00b4 FFF7FEFF 		bl	CRYP_Cmd
+ 253              	.LVL31:
+ 254              	.L4:
+ 176:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 177:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   return status; 
+ 255              		.loc 1 177 3 view .LVU87
+ 178:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** }
+ 256              		.loc 1 178 1 is_stmt 0 view .LVU88
+ 257 00b8 3046     		mov	r0, r6
+ 258 00ba 0EB0     		add	sp, sp, #56
+ 259              	.LCFI2:
+ 260              		.cfi_def_cfa_offset 24
+ 261              		@ sp needed
+ 262 00bc BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 263              		.loc 1 178 1 view .LVU89
+ 264              		.cfi_endproc
+ 265              	.LFE123:
+ 267              		.section	.text.CRYP_DES_CBC,"ax",%progbits
+ 268              		.align	1
+ 269              		.global	CRYP_DES_CBC
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 18
+
+
+ 270              		.syntax unified
+ 271              		.thumb
+ 272              		.thumb_func
+ 273              		.fpu fpv4-sp-d16
+ 275              	CRYP_DES_CBC:
+ 276              	.LVL32:
+ 277              	.LFB124:
+ 179:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 180:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** /**
+ 181:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @brief  Encrypt and decrypt using DES in CBC Mode
+ 182:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Mode: encryption or decryption Mode.
+ 183:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          This parameter can be one of the following values:
+ 184:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *            @arg MODE_ENCRYPT: Encryption
+ 185:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *            @arg MODE_DECRYPT: Decryption
+ 186:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Key: Key used for DES algorithm.
+ 187:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  InitVectors: Initialisation Vectors used for DES algorithm.
+ 188:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Ilength: length of the Input buffer, must be a multiple of 8.
+ 189:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Input: pointer to the Input buffer.
+ 190:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @param  Output: pointer to the returned buffer.
+ 191:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   * @retval An ErrorStatus enumeration value:
+ 192:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          - SUCCESS: Operation done
+ 193:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   *          - ERROR: Operation failed
+ 194:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   */
+ 195:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** ErrorStatus CRYP_DES_CBC(uint8_t Mode, uint8_t Key[8], uint8_t InitVectors[8],
+ 196:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****                          uint8_t *Input, uint32_t Ilength, uint8_t *Output)
+ 197:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** {
+ 278              		.loc 1 197 1 is_stmt 1 view -0
+ 279              		.cfi_startproc
+ 280              		@ args = 8, pretend = 0, frame = 72
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 282              		.loc 1 197 1 is_stmt 0 view .LVU91
+ 283 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 284              	.LCFI3:
+ 285              		.cfi_def_cfa_offset 28
+ 286              		.cfi_offset 4, -28
+ 287              		.cfi_offset 5, -24
+ 288              		.cfi_offset 6, -20
+ 289              		.cfi_offset 7, -16
+ 290              		.cfi_offset 8, -12
+ 291              		.cfi_offset 9, -8
+ 292              		.cfi_offset 14, -4
+ 293 0004 93B0     		sub	sp, sp, #76
+ 294              	.LCFI4:
+ 295              		.cfi_def_cfa_offset 104
+ 296 0006 8146     		mov	r9, r0
+ 297 0008 0E46     		mov	r6, r1
+ 298 000a 1546     		mov	r5, r2
+ 299 000c DDF86880 		ldr	r8, [sp, #104]
+ 198:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_InitTypeDef DES_CRYP_InitStructure;
+ 300              		.loc 1 198 3 is_stmt 1 view .LVU92
+ 199:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyInitTypeDef DES_CRYP_KeyInitStructure;
+ 301              		.loc 1 199 3 view .LVU93
+ 200:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_IVInitTypeDef DES_CRYP_IVInitStructure;
+ 302              		.loc 1 200 3 view .LVU94
+ 201:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   __IO uint32_t counter = 0;
+ 303              		.loc 1 201 3 view .LVU95
+ 304              		.loc 1 201 17 is_stmt 0 view .LVU96
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 19
+
+
+ 305 0010 0022     		movs	r2, #0
+ 306              	.LVL33:
+ 307              		.loc 1 201 17 view .LVU97
+ 308 0012 0192     		str	r2, [sp, #4]
+ 202:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t busystatus = 0;
+ 309              		.loc 1 202 3 is_stmt 1 view .LVU98
+ 310              	.LVL34:
+ 203:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ErrorStatus status = SUCCESS;
+ 311              		.loc 1 203 3 view .LVU99
+ 204:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t keyaddr    = (uint32_t)Key;
+ 312              		.loc 1 204 3 view .LVU100
+ 205:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t inputaddr  = (uint32_t)Input;
+ 313              		.loc 1 205 3 view .LVU101
+ 314              		.loc 1 205 12 is_stmt 0 view .LVU102
+ 315 0014 1C46     		mov	r4, r3
+ 316              	.LVL35:
+ 206:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t outputaddr = (uint32_t)Output;
+ 317              		.loc 1 206 3 is_stmt 1 view .LVU103
+ 318              		.loc 1 206 12 is_stmt 0 view .LVU104
+ 319 0016 1B9F     		ldr	r7, [sp, #108]
+ 320              	.LVL36:
+ 207:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t ivaddr     = (uint32_t)InitVectors;
+ 321              		.loc 1 207 3 is_stmt 1 view .LVU105
+ 208:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t i = 0;
+ 322              		.loc 1 208 3 view .LVU106
+ 209:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 210:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Crypto structures initialisation*/
+ 211:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyStructInit(&DES_CRYP_KeyInitStructure);
+ 323              		.loc 1 211 3 view .LVU107
+ 324 0018 06A8     		add	r0, sp, #24
+ 325              	.LVL37:
+ 326              		.loc 1 211 3 is_stmt 0 view .LVU108
+ 327 001a FFF7FEFF 		bl	CRYP_KeyStructInit
+ 328              	.LVL38:
+ 212:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 213:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Crypto Init for Encryption process */
+ 214:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   if(Mode == MODE_ENCRYPT) /* DES encryption */
+ 329              		.loc 1 214 3 is_stmt 1 view .LVU109
+ 330              		.loc 1 214 5 is_stmt 0 view .LVU110
+ 331 001e B9F1010F 		cmp	r9, #1
+ 332 0022 26D0     		beq	.L27
+ 215:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 216:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****      DES_CRYP_InitStructure.CRYP_AlgoDir  = CRYP_AlgoDir_Encrypt;
+ 217:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 218:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   else /*if(Mode == MODE_DECRYPT)*/ /* DES decryption */
+ 219:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 220:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****      DES_CRYP_InitStructure.CRYP_AlgoDir  = CRYP_AlgoDir_Decrypt;
+ 333              		.loc 1 220 6 is_stmt 1 view .LVU111
+ 334              		.loc 1 220 43 is_stmt 0 view .LVU112
+ 335 0024 0423     		movs	r3, #4
+ 336 0026 0E93     		str	r3, [sp, #56]
+ 337              	.L17:
+ 221:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 222:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 223:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_InitStructure.CRYP_AlgoMode = CRYP_AlgoMode_DES_CBC;
+ 338              		.loc 1 223 3 is_stmt 1 view .LVU113
+ 339              		.loc 1 223 40 is_stmt 0 view .LVU114
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 20
+
+
+ 340 0028 1823     		movs	r3, #24
+ 341 002a 0F93     		str	r3, [sp, #60]
+ 224:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_InitStructure.CRYP_DataType = CRYP_DataType_8b;
+ 342              		.loc 1 224 3 is_stmt 1 view .LVU115
+ 343              		.loc 1 224 40 is_stmt 0 view .LVU116
+ 344 002c 8023     		movs	r3, #128
+ 345 002e 1093     		str	r3, [sp, #64]
+ 225:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_Init(&DES_CRYP_InitStructure);
+ 346              		.loc 1 225 3 is_stmt 1 view .LVU117
+ 347 0030 0EA8     		add	r0, sp, #56
+ 348 0032 FFF7FEFF 		bl	CRYP_Init
+ 349              	.LVL39:
+ 226:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 227:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Key Initialisation */
+ 228:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_KeyInitStructure.CRYP_Key1Left = __REV(*(uint32_t*)(keyaddr));
+ 350              		.loc 1 228 3 view .LVU118
+ 351              		.loc 1 228 45 is_stmt 0 view .LVU119
+ 352 0036 3368     		ldr	r3, [r6]
+ 353              	.LVL40:
+ 354              	.LBB18:
+ 355              	.LBI18:
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 356              		.loc 2 495 57 is_stmt 1 view .LVU120
+ 357              	.LBB19:
+ 358              		.loc 2 498 3 view .LVU121
+ 359              		.loc 2 498 10 is_stmt 0 view .LVU122
+ 360 0038 1BBA     		rev	r3, r3
+ 361              	.LVL41:
+ 362              		.loc 2 498 10 view .LVU123
+ 363              	.LBE19:
+ 364              	.LBE18:
+ 365              		.loc 1 228 43 view .LVU124
+ 366 003a 0893     		str	r3, [sp, #32]
+ 229:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   keyaddr+=4;
+ 367              		.loc 1 229 3 is_stmt 1 view .LVU125
+ 368              	.LVL42:
+ 230:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_KeyInitStructure.CRYP_Key1Right= __REV(*(uint32_t*)(keyaddr));
+ 369              		.loc 1 230 3 view .LVU126
+ 370              		.loc 1 230 45 is_stmt 0 view .LVU127
+ 371 003c 7368     		ldr	r3, [r6, #4]
+ 372              	.LVL43:
+ 373              	.LBB20:
+ 374              	.LBI20:
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 375              		.loc 2 495 57 is_stmt 1 view .LVU128
+ 376              	.LBB21:
+ 377              		.loc 2 498 3 view .LVU129
+ 378              		.loc 2 498 10 is_stmt 0 view .LVU130
+ 379 003e 1BBA     		rev	r3, r3
+ 380              	.LVL44:
+ 381              		.loc 2 498 10 view .LVU131
+ 382              	.LBE21:
+ 383              	.LBE20:
+ 384              		.loc 1 230 43 view .LVU132
+ 385 0040 0993     		str	r3, [sp, #36]
+ 231:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_KeyInit(& DES_CRYP_KeyInitStructure);
+ 386              		.loc 1 231 3 is_stmt 1 view .LVU133
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 21
+
+
+ 387 0042 06A8     		add	r0, sp, #24
+ 388 0044 FFF7FEFF 		bl	CRYP_KeyInit
+ 389              	.LVL45:
+ 232:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 233:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Initialization Vectors */
+ 234:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_IVInitStructure.CRYP_IV0Left = __REV(*(uint32_t*)(ivaddr));
+ 390              		.loc 1 234 3 view .LVU134
+ 391              		.loc 1 234 43 is_stmt 0 view .LVU135
+ 392 0048 2B68     		ldr	r3, [r5]
+ 393              	.LVL46:
+ 394              	.LBB22:
+ 395              	.LBI22:
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 396              		.loc 2 495 57 is_stmt 1 view .LVU136
+ 397              	.LBB23:
+ 398              		.loc 2 498 3 view .LVU137
+ 399              		.loc 2 498 10 is_stmt 0 view .LVU138
+ 400 004a 1BBA     		rev	r3, r3
+ 401              	.LVL47:
+ 402              		.loc 2 498 10 view .LVU139
+ 403              	.LBE23:
+ 404              	.LBE22:
+ 405              		.loc 1 234 41 view .LVU140
+ 406 004c 0293     		str	r3, [sp, #8]
+ 235:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   ivaddr+=4;
+ 407              		.loc 1 235 3 is_stmt 1 view .LVU141
+ 408              	.LVL48:
+ 236:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   DES_CRYP_IVInitStructure.CRYP_IV0Right= __REV(*(uint32_t*)(ivaddr));
+ 409              		.loc 1 236 3 view .LVU142
+ 410              		.loc 1 236 43 is_stmt 0 view .LVU143
+ 411 004e 6B68     		ldr	r3, [r5, #4]
+ 412              	.LVL49:
+ 413              	.LBB24:
+ 414              	.LBI24:
+ 495:STM32F4xx_LIB/core/core_cmInstr.h **** {
+ 415              		.loc 2 495 57 is_stmt 1 view .LVU144
+ 416              	.LBB25:
+ 417              		.loc 2 498 3 view .LVU145
+ 418              		.loc 2 498 10 is_stmt 0 view .LVU146
+ 419 0050 1BBA     		rev	r3, r3
+ 420              	.LVL50:
+ 421              		.loc 2 498 10 view .LVU147
+ 422              	.LBE25:
+ 423              	.LBE24:
+ 424              		.loc 1 236 41 view .LVU148
+ 425 0052 0393     		str	r3, [sp, #12]
+ 237:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_IVInit(&DES_CRYP_IVInitStructure);
+ 426              		.loc 1 237 3 is_stmt 1 view .LVU149
+ 427 0054 02A8     		add	r0, sp, #8
+ 428 0056 FFF7FEFF 		bl	CRYP_IVInit
+ 429              	.LVL51:
+ 238:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 239:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Flush IN/OUT FIFO */
+ 240:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_FIFOFlush();
+ 430              		.loc 1 240 3 view .LVU150
+ 431 005a FFF7FEFF 		bl	CRYP_FIFOFlush
+ 432              	.LVL52:
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 22
+
+
+ 241:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   
+ 242:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   /* Enable Crypto processor */
+ 243:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   CRYP_Cmd(ENABLE);
+ 433              		.loc 1 243 3 view .LVU151
+ 434 005e 0120     		movs	r0, #1
+ 435 0060 FFF7FEFF 		bl	CRYP_Cmd
+ 436              	.LVL53:
+ 244:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** 
+ 245:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   if(CRYP_GetCmdStatus() == DISABLE)
+ 437              		.loc 1 245 3 view .LVU152
+ 438              		.loc 1 245 6 is_stmt 0 view .LVU153
+ 439 0064 FFF7FEFF 		bl	CRYP_GetCmdStatus
+ 440              	.LVL54:
+ 441              		.loc 1 245 5 view .LVU154
+ 442 0068 0646     		mov	r6, r0
+ 443              	.LVL55:
+ 444              		.loc 1 245 5 view .LVU155
+ 445 006a 68B3     		cbz	r0, .L18
+ 246:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 247:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     /* The CRYP peripheral clock is not enabled or the device doesn't embed 
+ 248:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     the CRYP peripheral (please check the device sales type. */
+ 249:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     status = ERROR;
+ 250:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 251:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   else
+ 252:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   {
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     for(i=0; ((i<Ilength) && (status != ERROR)); i+=8)
+ 446              		.loc 1 253 10 view .LVU156
+ 447 006c 0025     		movs	r5, #0
+ 448              	.LVL56:
+ 203:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   uint32_t keyaddr    = (uint32_t)Key;
+ 449              		.loc 1 203 15 view .LVU157
+ 450 006e 0126     		movs	r6, #1
+ 451 0070 05E0     		b	.L19
+ 452              	.LVL57:
+ 453              	.L27:
+ 216:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 454              		.loc 1 216 6 is_stmt 1 view .LVU158
+ 216:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 455              		.loc 1 216 43 is_stmt 0 view .LVU159
+ 456 0072 0023     		movs	r3, #0
+ 457 0074 0E93     		str	r3, [sp, #56]
+ 458 0076 D7E7     		b	.L17
+ 459              	.LVL58:
+ 460              	.L20:
+ 254:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 255:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       /* Write the Input block in the Input FIFO */
+ 256:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 257:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 258:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 259:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 260:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 261:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       /* Wait until the complete message has been processed */
+ 262:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       counter = 0;
+ 263:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 264:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 265:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         busystatus = CRYP_GetFlagStatus(CRYP_FLAG_BUSY);
+ 266:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 23
+
+
+ 267:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 268:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 269:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       if (busystatus != RESET)
+ 461              		.loc 1 269 7 is_stmt 1 view .LVU160
+ 462              		.loc 1 269 10 is_stmt 0 view .LVU161
+ 463 0078 D9B1     		cbz	r1, .L28
+ 270:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 271:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         status = ERROR;
+ 464              		.loc 1 271 16 view .LVU162
+ 465 007a 0026     		movs	r6, #0
+ 466              	.LVL59:
+ 467              	.L22:
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 468              		.loc 1 253 50 is_stmt 1 discriminator 2 view .LVU163
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 469              		.loc 1 253 51 is_stmt 0 discriminator 2 view .LVU164
+ 470 007c 0835     		adds	r5, r5, #8
+ 471              	.LVL60:
+ 472              	.L19:
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 473              		.loc 1 253 14 is_stmt 1 discriminator 1 view .LVU165
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 474              		.loc 1 253 5 is_stmt 0 discriminator 1 view .LVU166
+ 475 007e 4545     		cmp	r5, r8
+ 476 0080 1FD2     		bcs	.L23
+ 253:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     {
+ 477              		.loc 1 253 27 discriminator 3 view .LVU167
+ 478 0082 F6B1     		cbz	r6, .L23
+ 256:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 479              		.loc 1 256 7 is_stmt 1 view .LVU168
+ 480 0084 2068     		ldr	r0, [r4]
+ 481 0086 FFF7FEFF 		bl	CRYP_DataIn
+ 482              	.LVL61:
+ 257:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       CRYP_DataIn(*(uint32_t*)(inputaddr));
+ 483              		.loc 1 257 7 view .LVU169
+ 258:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       inputaddr+=4;
+ 484              		.loc 1 258 7 view .LVU170
+ 485 008a 6068     		ldr	r0, [r4, #4]
+ 486 008c FFF7FEFF 		bl	CRYP_DataIn
+ 487              	.LVL62:
+ 259:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 488              		.loc 1 259 7 view .LVU171
+ 259:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 489              		.loc 1 259 16 is_stmt 0 view .LVU172
+ 490 0090 0834     		adds	r4, r4, #8
+ 491              	.LVL63:
+ 262:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 492              		.loc 1 262 7 is_stmt 1 view .LVU173
+ 262:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       do
+ 493              		.loc 1 262 15 is_stmt 0 view .LVU174
+ 494 0092 0023     		movs	r3, #0
+ 495 0094 0193     		str	r3, [sp, #4]
+ 496              	.L21:
+ 263:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 497              		.loc 1 263 7 is_stmt 1 discriminator 2 view .LVU175
+ 265:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 498              		.loc 1 265 9 discriminator 2 view .LVU176
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 24
+
+
+ 265:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 499              		.loc 1 265 22 is_stmt 0 discriminator 2 view .LVU177
+ 500 0096 1020     		movs	r0, #16
+ 501 0098 FFF7FEFF 		bl	CRYP_GetFlagStatus
+ 502              	.LVL64:
+ 265:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         counter++;
+ 503              		.loc 1 265 20 discriminator 2 view .LVU178
+ 504 009c 0146     		mov	r1, r0
+ 505              	.LVL65:
+ 266:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 506              		.loc 1 266 9 is_stmt 1 discriminator 2 view .LVU179
+ 266:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }while ((counter != DESBUSY_TIMEOUT) && (busystatus != RESET));
+ 507              		.loc 1 266 16 is_stmt 0 discriminator 2 view .LVU180
+ 508 009e 019A     		ldr	r2, [sp, #4]
+ 509 00a0 0132     		adds	r2, r2, #1
+ 510 00a2 0192     		str	r2, [sp, #4]
+ 267:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 511              		.loc 1 267 14 is_stmt 1 discriminator 2 view .LVU181
+ 267:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 512              		.loc 1 267 24 is_stmt 0 discriminator 2 view .LVU182
+ 513 00a4 019B     		ldr	r3, [sp, #4]
+ 267:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 514              		.loc 1 267 7 discriminator 2 view .LVU183
+ 515 00a6 B3F5803F 		cmp	r3, #65536
+ 516 00aa E5D0     		beq	.L20
+ 267:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       
+ 517              		.loc 1 267 44 discriminator 1 view .LVU184
+ 518 00ac 0028     		cmp	r0, #0
+ 519 00ae F2D1     		bne	.L21
+ 520 00b0 E2E7     		b	.L20
+ 521              	.L28:
+ 272:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }
+ 273:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       else
+ 274:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       {
+ 275:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         /* Read the Output block from the Output FIFO */
+ 276:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         *(uint32_t*)(outputaddr) = CRYP_DataOut();
+ 522              		.loc 1 276 9 is_stmt 1 view .LVU185
+ 523              		.loc 1 276 36 is_stmt 0 view .LVU186
+ 524 00b2 FFF7FEFF 		bl	CRYP_DataOut
+ 525              	.LVL66:
+ 526              		.loc 1 276 34 view .LVU187
+ 527 00b6 3860     		str	r0, [r7]
+ 277:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         outputaddr+=4;
+ 528              		.loc 1 277 9 is_stmt 1 view .LVU188
+ 529              	.LVL67:
+ 278:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         *(uint32_t*)(outputaddr) = CRYP_DataOut();
+ 530              		.loc 1 278 9 view .LVU189
+ 531              		.loc 1 278 36 is_stmt 0 view .LVU190
+ 532 00b8 FFF7FEFF 		bl	CRYP_DataOut
+ 533              	.LVL68:
+ 534              		.loc 1 278 34 view .LVU191
+ 535 00bc 7860     		str	r0, [r7, #4]
+ 279:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****         outputaddr+=4;
+ 536              		.loc 1 279 9 is_stmt 1 view .LVU192
+ 537              		.loc 1 279 19 is_stmt 0 view .LVU193
+ 538 00be 0837     		adds	r7, r7, #8
+ 539              	.LVL69:
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 25
+
+
+ 540              		.loc 1 279 19 view .LVU194
+ 541 00c0 DCE7     		b	.L22
+ 542              	.L23:
+ 280:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****       }
+ 281:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     }
+ 282:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     
+ 283:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     /* Disable Crypto */
+ 284:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****     CRYP_Cmd(DISABLE);
+ 543              		.loc 1 284 5 is_stmt 1 view .LVU195
+ 544 00c2 0020     		movs	r0, #0
+ 545 00c4 FFF7FEFF 		bl	CRYP_Cmd
+ 546              	.LVL70:
+ 547              	.L18:
+ 285:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   }
+ 286:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c ****   return status; 
+ 548              		.loc 1 286 3 view .LVU196
+ 287:STM32F4xx_LIB/periph/src/stm32f4xx_cryp_des.c **** }
+ 549              		.loc 1 287 1 is_stmt 0 view .LVU197
+ 550 00c8 3046     		mov	r0, r6
+ 551 00ca 13B0     		add	sp, sp, #76
+ 552              	.LCFI5:
+ 553              		.cfi_def_cfa_offset 28
+ 554              		@ sp needed
+ 555 00cc BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 556              		.loc 1 287 1 view .LVU198
+ 557              		.cfi_endproc
+ 558              	.LFE124:
+ 560              		.text
+ 561              	.Letext0:
+ 562              		.file 3 "d:\\gcc_tool\\gnu_tool_arm_embedded\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 563              		.file 4 "d:\\gcc_tool\\gnu_tool_arm_embedded\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 564              		.file 5 "STM32F4xx_LIB/core/core_cm4.h"
+ 565              		.file 6 "User/system_stm32f4xx.h"
+ 566              		.file 7 "User/stm32f4xx.h"
+ 567              		.file 8 "STM32F4xx_LIB/periph/inc/stm32f4xx_cryp.h"
+ARM GAS  C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s 			page 26
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 stm32f4xx_cryp_des.c
+C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s:18     .text.CRYP_DES_ECB:00000000 $t
+C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s:26     .text.CRYP_DES_ECB:00000000 CRYP_DES_ECB
+C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s:268    .text.CRYP_DES_CBC:00000000 $t
+C:\Users\京垓\AppData\Local\Temp\ccNjlpuT.s:275    .text.CRYP_DES_CBC:00000000 CRYP_DES_CBC
+
+UNDEFINED SYMBOLS
+CRYP_KeyStructInit
+CRYP_Init
+CRYP_KeyInit
+CRYP_FIFOFlush
+CRYP_Cmd
+CRYP_GetCmdStatus
+CRYP_DataIn
+CRYP_GetFlagStatus
+CRYP_DataOut
+CRYP_IVInit
